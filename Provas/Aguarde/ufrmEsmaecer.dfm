@@ -1,0 +1,21 @@
+object frmEsmaecer: TfrmEsmaecer
+  Left = 0
+  Top = 0
+  Cursor = crHourGlass
+  AlphaBlend = True
+  AlphaBlendValue = 180
+  BorderStyle = bsNone
+  Caption = 'frmEsmaecer'
+  ClientHeight = 74
+  ClientWidth = 136
+  Color = clBlack
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+end

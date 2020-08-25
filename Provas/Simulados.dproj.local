@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/06/24 16:11:30.000.026,=C:\Users\t_thiago.irrazabal\Documents\Embarcadero\Studio\Projects\Unit24.pas</Transaction>
+    <Transaction>2020/06/24 16:11:52.000.823,=C:\Users\t_thiago.irrazabal\Documents\Login\ufrmLogin.pas</Transaction>
+    <Transaction>2020/06/24 16:11:52.000.938,=C:\Users\t_thiago.irrazabal\Documents\Login\ufrmSignUp.pas</Transaction>
+    <Transaction>2020/06/24 16:12:48.000.763,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\uMenu.pas=C:\Users\t_thiago.irrazabal\Documents\Embarcadero\Studio\Projects\Unit24.pas</Transaction>
+    <Transaction>2020/06/24 16:12:48.000.763,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\uMenu.dfm=C:\Users\t_thiago.irrazabal\Documents\Embarcadero\Studio\Projects\Unit24.dfm</Transaction>
+    <Transaction>2020/06/24 16:13:12.000.338,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Simulados.dproj=C:\Users\t_thiago.irrazabal\Documents\Embarcadero\Studio\Projects\Project21.dproj</Transaction>
+    <Transaction>2020/06/24 16:13:42.000.308,=C:\Users\t_thiago.irrazabal\Documents\Login\uJSONUser.pas</Transaction>
+    <Transaction>2020/06/24 16:14:50.000.771,C:\Users\t_thiago.irrazabal\Documents\Login\ufrmLogin.pas=</Transaction>
+    <Transaction>2020/06/24 16:14:50.000.754,C:\Users\t_thiago.irrazabal\Documents\Login\ufrmSignUp.pas=</Transaction>
+    <Transaction>2020/06/24 16:14:50.000.723,C:\Users\t_thiago.irrazabal\Documents\Login\uJSONUser.pas=</Transaction>
+    <Transaction>2020/06/24 16:15:29.000.557,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Login\ufrmSignUp.pas</Transaction>
+    <Transaction>2020/06/24 16:15:29.000.566,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Login\uJSONUser.pas</Transaction>
+    <Transaction>2020/06/24 16:15:29.000.503,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Login\ufrmLogin.pas</Transaction>
+    <Transaction>2020/06/24 16:47:48.000.489,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/06/24 16:48:03.000.222,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\uRequisicoes.pas=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/06/24 17:18:40.000.711,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Server\uAcessToken.pas</Transaction>
+    <Transaction>2020/06/25 12:39:39.000.328,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Server\uSisProvasJSON.pas</Transaction>
+    <Transaction>2020/06/25 13:21:04.000.080,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/06/25 13:21:19.000.146,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmQuestao.dfm=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.dfm</Transaction>
+    <Transaction>2020/06/25 13:21:19.000.146,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmQuestao.pas=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/06/26 10:31:00.000.967,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Login\uJSONUser.pas=</Transaction>
+    <Transaction>2020/06/26 15:33:45.000.166,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Server\uSisUsuarioProvasJSON.pas</Transaction>
+    <Transaction>2020/06/27 20:32:56.000.811,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Aguarde\ufrmAguarde.pas</Transaction>
+    <Transaction>2020/06/27 20:32:56.000.861,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Aguarde\ufrmEsmaecer.pas</Transaction>
+    <Transaction>2020/06/27 20:43:01.000.360,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/06/27 20:44:37.000.541,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Aguarde\ufrmAguarde.pas=</Transaction>
+    <Transaction>2020/06/27 20:44:43.000.032,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Aguarde\ufrmAguarde.pas=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/06/27 20:44:43.000.032,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Aguarde\ufrmAguarde.dfm=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.dfm</Transaction>
+    <Transaction>2020/07/07 17:18:01.000.807,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/07/07 17:29:50.000.515,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmResultado.dfm=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.dfm</Transaction>
+    <Transaction>2020/07/07 17:29:50.000.515,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmResultado.pas=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/07/08 14:18:36.000.140,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/07/08 14:24:23.000.667,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmResultadoQuestoes.pas=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.pas</Transaction>
+    <Transaction>2020/07/08 14:24:23.000.667,C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmResultadoQuestoes.dfm=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\Unit1.dfm</Transaction>
+    <Transaction>2020/08/17 17:20:29.000.751,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Provas\ufrmResultadoCategorias.pas</Transaction>
+    <Transaction>2020/08/17 17:56:13.000.134,=C:\Users\t_thiago.irrazabal\Documents\Simulados\Server\uSisPerguntasCategoriasJSON.pas</Transaction>
+  </Transactions>
+</BorlandProject>
