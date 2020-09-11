@@ -28,6 +28,8 @@ type
   var
     FFrmEsmaecer: TfrmEsmaecer;
   public
+    constructor Create(const DataHoraInicio, DataHoraFim: TDateTime;
+      const NumeroProva, QuantidadeAcertos: Integer); overload;
     destructor Destroy; override;
     class function New(const DataHoraInicio, DataHoraFim: TDateTime;
       const NumeroProva, QuantidadeAcertos: Integer): TfrmResultado;
@@ -40,6 +42,22 @@ implementation
 
 {$R *.dfm}
 
+constructor TfrmResultado.Create(const DataHoraInicio, DataHoraFim: TDateTime;
+  const NumeroProva, QuantidadeAcertos: Integer);
+begin
+  inherited Create(nil);
+  lblProva.Caption := Format(lblProva.Caption, [NumeroProva.ToString]);
+  lblDataHoraInicio.Caption := Format(lblDataHoraInicio.Caption, [FormatDateTime('dd/mm/yyyy hh:nn:ss', DataHoraInicio)]);
+  lblDataHoraFim.Caption := Format(lblDataHoraFim.Caption, [FormatDateTime('dd/mm/yyyy hh:nn:ss', DataHoraFim)]);
+  lblQuantidadeAcertos.Caption := Format(lblQuantidadeAcertos.Caption, [QuantidadeAcertos.ToString, '60']);
+  lblTempoExecucao.Caption := Format(lblTempoExecucao.Caption, [FormatDateTime('hh:nn:ss', DataHoraFim - DataHoraInicio)]);
+  Position := poScreenCenter;
+  AlphaBlend := True;
+  AlphaBlendValue := 200;
+  FFrmEsmaecer := TfrmEsmaecer.New(Self);
+  Self.BringToFront;
+end;
+
 destructor TfrmResultado.Destroy;
 begin
   if Assigned(FFrmEsmaecer) then
@@ -51,17 +69,7 @@ end;
 class function TfrmResultado.New(const DataHoraInicio, DataHoraFim: TDateTime;
   const NumeroProva, QuantidadeAcertos: Integer): TfrmResultado;
 begin
-  Result := Self.Create(nil);
-  Result.lblProva.Caption := Format(Result.lblProva.Caption, [NumeroProva.ToString]);
-  Result.lblDataHoraInicio.Caption := Format(Result.lblDataHoraInicio.Caption, [FormatDateTime('dd/mm/yyyy hh:nn:ss', DataHoraInicio)]);
-  Result.lblDataHoraFim.Caption := Format(Result.lblDataHoraFim.Caption, [FormatDateTime('dd/mm/yyyy hh:nn:ss', DataHoraFim)]);
-  Result.lblQuantidadeAcertos.Caption := Format(Result.lblQuantidadeAcertos.Caption, [QuantidadeAcertos.ToString, '60']);
-  Result.lblTempoExecucao.Caption := Format(Result.lblTempoExecucao.Caption, [FormatDateTime('hh:nn:ss', DataHoraFim - DataHoraInicio)]);
-  Result.Position := poScreenCenter;
-  Result.AlphaBlend := True;
-  Result.AlphaBlendValue := 200;
-  Result.FFrmEsmaecer := TfrmEsmaecer.New(Result);
-  Application.ProcessMessages;
+  Result := Self.Create(DataHoraInicio, DataHoraFim, NumeroProva, QuantidadeAcertos);
 end;
 
 procedure TfrmResultado.pnlCloseButtonClick(Sender: TObject);

@@ -32,6 +32,8 @@ type
     FRestClient: TRESTClient;
     FRestResponse: TRESTResponse;
     FRestRequest: TRESTRequest;
+  private
+    function IncludeTrailingHTTPDelimiter(const Value: string): string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -103,6 +105,13 @@ begin
   Result := FEndPoint;
 end;
 
+function TRequisicoes.IncludeTrailingHTTPDelimiter(const Value: string): string;
+begin
+  Result := Value;
+  if (Result[Length(Result) - 1] <> '/') then
+    Result := Result + '/';
+end;
+
 function TRequisicoes.EndPoint(const Value: string): IRequisicoes;
 begin
   Result := Self;
@@ -114,7 +123,7 @@ var
   Parameter: TRESTRequestParameter;
 begin
   Result := Self;
-  FRestClient.BaseURL := FRestClient.BaseURL + FEndPoint;
+  FRestClient.BaseURL := IncludeTrailingHTTPDelimiter(FRestClient.BaseURL) + FEndPoint;
   FRESTRequest.Method := TRESTRequestMethod.rmGET;
   if (FAcessToken <> EmptyStr) then
   begin
@@ -149,7 +158,7 @@ var
   Parameter: TRESTRequestParameter;
 begin
   Result := Self;
-  FRestClient.BaseURL := FRestClient.BaseURL + FEndPoint;
+  FRestClient.BaseURL := IncludeTrailingHTTPDelimiter(FRestClient.BaseURL) + FEndPoint;
   FRESTRequest.Method := TRESTRequestMethod.rmPOST;
   if (FAcessToken <> EmptyStr) then
   begin

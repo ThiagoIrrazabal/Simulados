@@ -57,6 +57,7 @@ type
     FFrmEsmaecer: TfrmEsmaecer;
     FVerQuestoes: Boolean;
   public
+    constructor Create(const NumeroProva: Integer); overload;
     destructor Destroy; override;
     class function New(const NumeroProva: Integer): TfrmResultadoCategorias;
     property VerQuestoes: Boolean read FVerQuestoes write FVerQuestoes;
@@ -75,6 +76,17 @@ begin
   ModalResult := mrOk;
 end;
 
+constructor TfrmResultadoCategorias.Create(const NumeroProva: Integer);
+begin
+  inherited Create(nil);
+  lblProva.Caption := Format(lblProva.Caption, [NumeroProva.ToString]);
+  Position := poScreenCenter;
+  AlphaBlend := True;
+  AlphaBlendValue := 200;
+  FFrmEsmaecer := TfrmEsmaecer.New(Self);
+  Self.BringToFront;
+end;
+
 destructor TfrmResultadoCategorias.Destroy;
 begin
   if Assigned(FFrmEsmaecer) then
@@ -85,13 +97,7 @@ end;
 
 class function TfrmResultadoCategorias.New(const NumeroProva: Integer): TfrmResultadoCategorias;
 begin
-  Result := Self.Create(nil);
-  Result.lblProva.Caption := Format(Result.lblProva.Caption, [NumeroProva.ToString]);
-  Result.Position := poScreenCenter;
-  Result.AlphaBlend := True;
-  Result.AlphaBlendValue := 200;
-  Result.FFrmEsmaecer := TfrmEsmaecer.New(Result);
-  Application.ProcessMessages;
+  Result := Self.Create(NumeroProva);
 end;
 
 procedure TfrmResultadoCategorias.pnlCloseButtonClick(Sender: TObject);
