@@ -11,7 +11,7 @@ object frmResultado: TfrmResultado
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBackGround: TPanel

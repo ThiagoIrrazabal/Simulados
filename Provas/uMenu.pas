@@ -668,11 +668,12 @@ begin
   try
     lSis_usuario_provas := TSis_usuario_provasClass.FromJsonString(ReqFinalizarProva.JSONResponse);
     try
-      frmResultado :=
-        TfrmResultado.New(lSis_usuario_provas.data_hora_inicio,
-                          lSis_usuario_provas.data_hora_fim,
-                          Prova,
-                          Trunc(lSis_usuario_provas.quantidade_acertos));
+      frmResultado := TfrmResultado.Create(nil);
+      frmResultado.lblProva.Caption := Format(frmResultado.lblProva.Caption, [Prova.ToString]);
+      frmResultado.lblDataHoraInicio.Caption := Format(frmResultado.lblDataHoraInicio.Caption, [FormatDateTime('dd/mm/yyyy hh:nn:ss', lSis_usuario_provas.data_hora_inicio)]);
+      frmResultado.lblDataHoraFim.Caption := Format(frmResultado.lblDataHoraFim.Caption, [FormatDateTime('dd/mm/yyyy hh:nn:ss', lSis_usuario_provas.data_hora_fim)]);
+      frmResultado.lblQuantidadeAcertos.Caption := Format(frmResultado.lblQuantidadeAcertos.Caption, [Trunc(lSis_usuario_provas.quantidade_acertos).ToString, '60']);
+      frmResultado.lblTempoExecucao.Caption := Format(frmResultado.lblTempoExecucao.Caption, [FormatDateTime('hh:nn:ss', lSis_usuario_provas.data_hora_fim - lSis_usuario_provas.data_hora_inicio)]);
       try
         frmResultado.ShowModal;
       finally
@@ -686,9 +687,9 @@ begin
   end;
 
   Application.ProcessMessages;
-  frmResultadoCategorias :=
-    TfrmResultadoCategorias.New(Prova);
+  frmResultadoCategorias := TfrmResultadoCategorias.Create(nil);
   try
+    frmResultadoCategorias.lblProva.Caption := Format(frmResultadoCategorias.lblProva.Caption, [Prova.ToString]);
     if not(Assigned(frmAguarde)) then
       frmAguarde := TfrmAguarde.New('Aguarde...');
     try
