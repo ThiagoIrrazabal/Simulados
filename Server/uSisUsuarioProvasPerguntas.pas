@@ -9,7 +9,8 @@ uses
   Data.DB,
   FireDAC.Comp.Client,
   FireDAC.Stan.Param,
-  uConexao;
+  uConexao,
+  System.Generics.Collections;
 
 type
   /// <summary>
@@ -51,11 +52,16 @@ type
     function ID: Integer; overload;
     function ConsultaID(const Value: Integer): ISisUsuarioProvasPerguntas;
 
+    function IDs(const Value: TList<Integer>): ISisUsuarioProvasPerguntas; overload;
+    function IDs: TList<Integer>; overload;
+
     /// <summary>
     /// Field: ACERTOU.
     /// </summary>
     function Acertou(const Value: Boolean): ISisUsuarioProvasPerguntas; overload;
     function Acertou: Boolean; overload;
+
+    function Conexao: TFDConnection;
 
     function Find: ISisUsuarioProvasPerguntas;
     function Insert: ISisUsuarioProvasPerguntas;
@@ -66,6 +72,7 @@ type
   TSisUsuarioProvasPerguntas = class(TConexao, ISisUsuarioProvasPerguntas)
   strict private
     FID: Integer;
+    FIDs: TList<Integer>;
     FIDUsuarioProva: Integer;
     FIDProvaPergunta: Integer;
     FOrdem: Integer;
@@ -81,6 +88,8 @@ type
     class function New: ISisUsuarioProvasPerguntas;
     function ID(const Value: Integer): ISisUsuarioProvasPerguntas; overload;
     function ID: Integer; overload;
+    function IDs(const Value: TList<Integer>): ISisUsuarioProvasPerguntas; overload;
+    function IDs: TList<Integer>; overload;
     function ConsultaID(const Value: Integer): ISisUsuarioProvasPerguntas;
     function IDUsuarioProva(const Value: Integer): ISisUsuarioProvasPerguntas; overload;
     function IDUsuarioProva: Integer; overload;
@@ -98,6 +107,7 @@ type
     function Insert: ISisUsuarioProvasPerguntas;
     function Update: ISisUsuarioProvasPerguntas;
     function InsertIf(const Value: Boolean): ISisUsuarioProvasPerguntas;
+    function Conexao: TFDConnection;
   end;
 
 implementation
@@ -147,6 +157,8 @@ function TSisUsuarioProvasPerguntas.Update: ISisUsuarioProvasPerguntas;
 var
   sdsUpdate: TFDQuery;
   Values: string;
+  S: string;
+  I: Integer;
 begin
   Result := Self;
   sdsUpdate := TFDQuery.Create(nil);
@@ -155,14 +167,34 @@ begin
 
     Values := Values + 'ACERTOU = :ACERTOU';
 
-    FSQLUpdate.Append(Values)
-              .Append(' where ')
-              .Append('   id = :id');
+    if (FID > -1) then
+    begin
+      FSQLUpdate.Append(Values)
+                .Append(' where ')
+                .Append('   id = :id');
 
-    sdsUpdate.SQL.Add(FSQLUpdate.ToString);
-    sdsUpdate.ParamByName('ACERTOU').AsBoolean := Self.FAcertou;
-    sdsUpdate.ParamByName('ID').AsInteger := Self.FID;
-    sdsUpdate.ExecSQL;
+      sdsUpdate.SQL.Add(FSQLUpdate.ToString);
+      sdsUpdate.ParamByName('ACERTOU').AsBoolean := Self.FAcertou;
+      sdsUpdate.ParamByName('ID').AsInteger := Self.FID;
+      sdsUpdate.ExecSQL;
+    end
+    else
+    begin
+      for I := 0 to FIDs.Count - 1 do
+        S := S + FIDs.Items[I].ToString + ',';
+
+      if (S <> EmptyStr) then
+      begin
+        S := Copy(S, 1, Length(S) - 1);
+        FSQLUpdate.Append(Values)
+                  .Append(' where ')
+                  .Append('   id in (' + S + ')');
+
+        sdsUpdate.SQL.Add(FSQLUpdate.ToString);
+        sdsUpdate.ParamByName('ACERTOU').AsBoolean := Self.FAcertou;
+        sdsUpdate.ExecSQL;
+      end;
+    end;
   finally
     FreeAndNil(sdsUpdate);
   end;
@@ -206,6 +238,18 @@ begin
   Result := FIDProvaPergunta;
 end;
 
+function TSisUsuarioProvasPerguntas.IDs: TList<Integer>;
+begin
+  Result := FIDs;
+end;
+
+function TSisUsuarioProvasPerguntas.IDs(
+  const Value: TList<Integer>): ISisUsuarioProvasPerguntas;
+begin
+  Result := Self;
+  FIDs := Value;
+end;
+
 function TSisUsuarioProvasPerguntas.ConsultaIDProvaPergunta(
   const Value: Integer): ISisUsuarioProvasPerguntas;
 begin
@@ -242,6 +286,11 @@ end;
 function TSisUsuarioProvasPerguntas.ID: Integer;
 begin
   Result := FID;
+end;
+
+function TSisUsuarioProvasPerguntas.Conexao: TFDConnection;
+begin
+  Result := Self.Connection;
 end;
 
 function TSisUsuarioProvasPerguntas.ConsultaID(const Value: Integer): ISisUsuarioProvasPerguntas;
