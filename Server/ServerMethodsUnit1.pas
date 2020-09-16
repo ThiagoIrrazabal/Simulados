@@ -52,7 +52,7 @@ uses System.StrUtils,
      RespostasJSON,
      uSisCategorias,
      uSisPerguntasCategoriasJSON,
-     System.Threading, uFinalizarProva;
+     System.Threading, uFinalizarProva, uPercentuaisCategorias;
 
 function TApiMethods.CalcularAcertos(const IDUsuarioProva, IDProva: Integer;
   const ConsultaSisUsuarioProvas: ISisUsuarioProvas): TJSONObject;
@@ -338,67 +338,33 @@ end;
 
 function TApiMethods.UsuarioPerguntasCategorias(const IDProva, IDUsuario: Integer): TJSONObject;
 var
-  Item_SisCategorias, SisCategorias: ISisCategorias;
   SisUsuarioProvas: ISisUsuarioProvas;
-  SisUsuarioProvasPerguntas: ISisUsuarioProvasPerguntas;
-  Item_SisProvasPerguntas, SisProvasPerguntas: ISisProvasPerguntas;
   Categoria: TCategorias;
-  QuantidadePerguntas, QuantidadeCertas: Integer;
+  PercentuaisCategorias, Lista: IPercentuaisCategorias;
 begin
-  SisCategorias := TSisCategorias.New
-                                 .Find;
+  SisUsuarioProvas := TSisUsuarioProvas.New
+                                       .ConsultaIDProva(IDProva)
+                                       .ConsultaIDUsuario(IDUsuario)
+                                       .Find;
+  Categoria := TCategorias.Create;
   try
-    SisUsuarioProvas := TSisUsuarioProvas.New
-                                         .ConsultaIDProva(IDProva)
-                                         .ConsultaIDUsuario(IDUsuario)
-                                         .Find;
-    try
-      Categoria := TCategorias.Create;
-      try
-        for Item_SisCategorias in SisCategorias.ListaSisCategorias do
-        begin
-          QuantidadeCertas := 0;
-          SisProvasPerguntas :=
-            TSisProvasPerguntas.New
-                               .ConsultaIDProva(IDProva)
-                               .ConsultaIDCategoria(Item_SisCategorias.ID)
-                               .Find;
-          try
-            QuantidadePerguntas := Length(SisProvasPerguntas.ListaISisProvasPerguntas);
-            for Item_SisProvasPerguntas in SisProvasPerguntas.ListaISisProvasPerguntas do
-            begin
-              SisUsuarioProvasPerguntas :=
-                TSisUsuarioProvasPerguntas.New
-                                          .ConsultaIDUsuarioProva(SisUsuarioProvas.ID)
-                                          .ConsultaIDProvaPergunta(Item_SisProvasPerguntas.ID)
-                                          .Find;
-              try
-                if SisUsuarioProvasPerguntas.Acertou then
-                  QuantidadeCertas := QuantidadeCertas + 1;
-              finally
-                SisUsuarioProvasPerguntas := nil;
-              end;
-            end;
-          finally
-            SisProvasPerguntas := nil;
-          end;
-
-          with Categoria.Add do
-          begin
-            descricao := Item_SisCategorias.Descricao;
-            percentual := ((QuantidadeCertas * 100) / QuantidadePerguntas);
-          end;
-        end;
-
-        Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(Categoria.ToJsonString), 0) as TJSONObject;
-      finally
-        FreeAndNil(Categoria);
+    PercentuaisCategorias := TPercentuaisCategorias.New
+                                                   .ConsultaIDUsuarioProva(SisUsuarioProvas.ID)
+                                                   .ConsultaIDProva(IDProva)
+                                                   .Find
+                                                   .CloseConnection;
+    for Lista in PercentuaisCategorias.Lista do
+    begin
+      with Categoria.Add do
+      begin
+        descricao := Lista.Descricao;
+        percentual := Lista.Percentual;
       end;
-    finally
-      SisUsuarioProvas := nil;
     end;
+
+    Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(Categoria.ToJsonString), 0) as TJSONObject;
   finally
-    SisCategorias := nil;
+    FreeAndNil(Categoria);
   end;
 end;
 

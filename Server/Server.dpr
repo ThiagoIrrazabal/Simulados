@@ -27,7 +27,8 @@ uses
   uConexao in 'uConexao.pas',
   uSisCategorias in 'uSisCategorias.pas',
   uSisPerguntasCategoriasJSON in 'uSisPerguntasCategoriasJSON.pas',
-  uFinalizarProva in 'uFinalizarProva.pas';
+  uFinalizarProva in 'uFinalizarProva.pas',
+  uPercentuaisCategorias in 'uPercentuaisCategorias.pas';
 
 {$R *.res}
 
