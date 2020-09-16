@@ -71,7 +71,7 @@ implementation
 
 constructor TSisCategorias.Create;
 begin
-  inherited Create;
+  inherited Create(True);
   FSQLConsulta := TStringBuilder.Create;
   FSQLConsulta.Append('select ID, DESCRICAO, COUNT(*) over() from SIS_CATEGORIAS where 0=0 ');
 

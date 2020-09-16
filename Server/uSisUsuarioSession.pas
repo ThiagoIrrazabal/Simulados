@@ -107,7 +107,7 @@ implementation
  
 constructor TSisUsuarioSession.Create;
 begin 
-  inherited Create; 
+  inherited Create(True);
   FSQLConsulta := TStringBuilder.Create; 
   FSQLConsulta.Append('select * from SIS_USUARIO_SESSION where 0=0 '); 
  

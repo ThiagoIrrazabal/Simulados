@@ -28,7 +28,7 @@ uses
 type
   IConexao = interface(IInterface)
     ['{33E169A8-7072-4ACE-BB3F-4A9D2CE65DE4}']
-    procedure CreateConnection;
+    procedure CreateConnection(const Conectar: Boolean);
   end;
 
   TConexao = class(TInterfacedObject, IConexao)
@@ -38,9 +38,9 @@ type
     FPhysDriverLink1: TFDPhysPgDriverLink;
     FTransaction: TFDTransaction;
   public
-    constructor Create;
+    constructor Create(const Conectar: Boolean);
     destructor Destroy; override;
-    procedure CreateConnection;
+    procedure CreateConnection(const Conectar: Boolean);
     property Connection: TFDConnection read FConnection write FConnection;
   end;
 
@@ -48,13 +48,13 @@ implementation
 
 { TConexao }
 
-constructor TConexao.Create;
+constructor TConexao.Create(const Conectar: Boolean);
 begin
   inherited Create;
-  CreateConnection;
+  CreateConnection(Conectar);
 end;
 
-procedure TConexao.CreateConnection;
+procedure TConexao.CreateConnection(const Conectar: Boolean);
 begin
   FPhysDriverLink1 := TFDPhysPgDriverLink.Create(nil);
   FPhysDriverLink1.VendorLib := 'libpq.dll';
@@ -74,7 +74,7 @@ begin
   FConnection.Params.Values['Server'] := 'localhost';
   FConnection.Params.Values['User_Name'] := 'postgres';
 
-  FConnection.Connected := True;
+  FConnection.Connected := Conectar;
 end;
 
 destructor TConexao.Destroy;

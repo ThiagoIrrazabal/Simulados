@@ -122,7 +122,7 @@ implementation
  
 constructor TSisUsuarioProvas.Create;
 begin 
-  inherited Create; 
+  inherited Create(True);
   FSQLConsulta := TStringBuilder.Create;
   FSQLConsulta.Append('select ID, ID_USUARIO, ID_PROVA, DATA_HORA_INICIO, DATA_HORA_FIM, QUANTIDADE_ACERTOS, COUNT(*) over() from SIS_USUARIO_PROVAS where 0=0 ');
  

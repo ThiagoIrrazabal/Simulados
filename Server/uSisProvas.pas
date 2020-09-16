@@ -92,7 +92,7 @@ implementation
  
 constructor TSisProvas.Create;
 begin 
-  inherited Create; 
+  inherited Create(True);
   FSQLConsulta := TStringBuilder.Create; 
   FSQLConsulta.Append('select * from SIS_PROVAS where 0=0 '); 
  
@@ -235,7 +235,6 @@ begin
       Self.FTempo := sdsConsulta.FieldByName('TEMPO').AsInteger; 
       Self.FDescricao := sdsConsulta.FieldByName('DESCRICAO').AsString; 
       Self.FID := sdsConsulta.FieldByName('ID').AsInteger;
-//      Self.ConsultaListaSisProvasPerguntas(sdsConsulta.FieldByName('ID').AsInteger);
     end
     else ClearFields; 
   finally

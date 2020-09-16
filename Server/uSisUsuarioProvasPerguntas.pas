@@ -116,7 +116,7 @@ implementation
 
 constructor TSisUsuarioProvasPerguntas.Create;
 begin
-  inherited Create;
+  inherited Create(True);
   FSQLConsulta := TStringBuilder.Create;
   FSQLConsulta.Append('select ID, ID_USUARIO_PROVA, ID_PROVA_PERGUNTA, ORDEM, ACERTOU, COUNT(*) over() from SIS_USUARIO_PROVAS_PERGUNTAS where 0=0 ');
 

@@ -52,91 +52,49 @@ uses System.StrUtils,
      RespostasJSON,
      uSisCategorias,
      uSisPerguntasCategoriasJSON,
-     System.Threading;
+     System.Threading, uFinalizarProva;
 
 function TApiMethods.CalcularAcertos(const IDUsuarioProva, IDProva: Integer;
   const ConsultaSisUsuarioProvas: ISisUsuarioProvas): TJSONObject;
 var
-  Item_Sis_provas_perguntas, Sis_provas_perguntas: ISisProvasPerguntas;
-  Sis_provas_perguntas_respostas, Item_Sis_provas_perguntas_respostas: ISisProvasPerguntasRespostas;
-  Sis_usuario_provas_perguntas: ISisUsuarioProvasPerguntas;
-  Sis_usuario_provas_perguntas_respostas: ISisUsuarioProvasPerguntasRespostas;
-  RespostasCertas, RespondidasCertas: Integer;
+  FinalizarProva, Lista: IFinalizaProva;
   Certas, Erradas: TList<Integer>;
 begin
   Certas := TList<Integer>.Create;
   try
     Erradas := TList<Integer>.Create;
     try
-      Sis_provas_perguntas := TSisProvasPerguntas.New
-                                                 .ConsultaIDProva(IDProva)
-                                                 .Find;
-      try
-        for Item_Sis_provas_perguntas in Sis_provas_perguntas.ListaISisProvasPerguntas do
-        begin
-          RespostasCertas := 0;
-          RespondidasCertas := 0;
-          Sis_usuario_provas_perguntas := TSisUsuarioProvasPerguntas.New
-                                                                    .ConsultaIDUsuarioProva(IDUsuarioProva)
-                                                                    .ConsultaIDProvaPergunta(Item_Sis_provas_perguntas.ID)
-                                                                    .Find;
-          try
-            Sis_provas_perguntas_respostas := TSisProvasPerguntasRespostas.New
-                                                                          .ConsultaIDPergunta(Item_Sis_provas_perguntas.ID)
-                                                                          .Find;
-            try
-              for Item_Sis_provas_perguntas_respostas in Sis_provas_perguntas_respostas.ListaSisProvasPerguntasRespostas do
-              begin
-                Sis_usuario_provas_perguntas_respostas := TSisUsuarioProvasPerguntasRespostas.New
-                                                                                             .ConsultaIDUsuarioProvaPergunta(Sis_usuario_provas_perguntas.ID)
-                                                                                             .ConsultaIDProvaPerguntaResposta(Item_Sis_provas_perguntas_respostas.ID)
-                                                                                             .Find;
-                try
-                  if (Item_Sis_provas_perguntas_respostas.Certa) then
-                  begin
-                    RespostasCertas := RespostasCertas + 1;
+      FinalizarProva := TFinalizaProva.New
+                                      .ConsultaIDUsuarioProva(IDUsuarioProva)
+                                      .ConsultaIDProva(IDProva)
+                                      .Find
+                                      .CloseConnection;
+      for Lista in FinalizarProva.Lista do
+      begin
+        if Lista.Acertou then
+          Certas.Add(Lista.IDUsuarioProvaPergunta)
+        else Erradas.Add(Lista.IDUsuarioProvaPergunta);
+      end;
 
-                    if (Sis_usuario_provas_perguntas_respostas.ID > 0) then
-                      RespondidasCertas := RespondidasCertas + 1;
-                  end;
-                finally
-                  Sis_usuario_provas_perguntas_respostas := nil;
-                end;
-              end;
-            finally
-              Sis_provas_perguntas_respostas := nil;
-            end;
-
-            if (RespostasCertas = RespondidasCertas) then
-              Certas.Add(Sis_usuario_provas_perguntas.id)
-            else Erradas.Add(Sis_usuario_provas_perguntas.id);
-          finally
-            Sis_usuario_provas_perguntas := nil;
-          end;
-        end;
-
-        TSisUsuarioProvasPerguntas.New
+      TSisUsuarioProvasPerguntas.New
                                 .IDs(Certas)
                                 .Acertou(True)
                                 .Update;
 
-        TSisUsuarioProvasPerguntas.New
-                                  .IDs(Erradas)
-                                  .Acertou(False)
-                                  .Update;
+      TSisUsuarioProvasPerguntas.New
+                                .IDs(Erradas)
+                                .Acertou(False)
+                                .Update;
 
-        Result := PopularJSONProva(
-          TSisUsuarioProvas.New
-                           .ID(ConsultaSisUsuarioProvas.ID)
-                           .IDProva(ConsultaSisUsuarioProvas.IDProva)
-                           .IDUsuario(ConsultaSisUsuarioProvas.IDUsuario)
-                           .DataHoraInicio(ConsultaSisUsuarioProvas.DataHoraInicio)
-                           .DataHoraFim(ConsultaSisUsuarioProvas.DataHoraFim)
-                           .QuantidadeAcertos(Certas.Count)
-                           .Update);
-      finally
-        Sis_provas_perguntas := nil;
-      end;
+      Result := PopularJSONProva(
+        TSisUsuarioProvas.New
+                         .ID(ConsultaSisUsuarioProvas.ID)
+                         .IDProva(ConsultaSisUsuarioProvas.IDProva)
+                         .IDUsuario(ConsultaSisUsuarioProvas.IDUsuario)
+                         .DataHoraInicio(ConsultaSisUsuarioProvas.DataHoraInicio)
+                         .DataHoraFim(ConsultaSisUsuarioProvas.DataHoraFim)
+                         .QuantidadeAcertos(Certas.Count)
+                         .Update);
     finally
       FreeAndNil(Erradas);
     end;

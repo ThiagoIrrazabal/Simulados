@@ -111,7 +111,7 @@ implementation
  
 constructor TSisProvasPerguntasRespostas.Create;
 begin 
-  inherited Create;
+  inherited Create(True);
   FSQLConsulta := TStringBuilder.Create;
   FSQLConsulta.Append('select * from SIS_PROVAS_PERGUNTAS_RESPOSTAS where 0=0 '); 
  
